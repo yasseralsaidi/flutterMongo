@@ -9,7 +9,7 @@ class MongoDatabase {
   static connect() async {
     // connection to mongodb
     db = await Db.create(
-        "mongodb+srv://tanishq777:tanishq777@cluster0.lzgyb.mongodb.net/myFirstDatabase?retryWrites=true&w=majority");
+        "mongodb+srv://yasser:yas94MDB@cluster0.fkj5zec.mongodb.net/theqfs");
     // open the database for changes
     await db.open();
     // fetch the collection we want
@@ -20,6 +20,14 @@ class MongoDatabase {
   // this is the create function of the app
   static insert(User user) async {
     await collection.insertAll([user.toMap()]);
+  }
+
+  static search(String name) async {
+    var users = await collection.find({
+      "name": {r'$regex': name, r'$options': 'i'}
+    }).toList();
+    print(users);
+    return users;
   }
 
   // this function is to read the data from db
